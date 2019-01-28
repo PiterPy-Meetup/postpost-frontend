@@ -1,18 +1,16 @@
 <template>
-    <publication-list></publication-list>
+  <publication-list></publication-list>
 </template>
 
-<script lang="ts">
-import Vue from 'vue'
-import { Component } from 'vue-property-decorator'
-import PublicationList from '@/components/PublicationList.vue'
+<script lang='ts'>
+import Vue from 'vue';
+import { Component } from 'vue-property-decorator';
+import PublicationList from '@/components/PublicationList.vue';
 
 @Component({
-    components: {
-        PublicationList
-    }
+  components: {
+    PublicationList,
+  },
 })
-export default class Publications extends Vue {
-
-}
+export default class Publications extends Vue {}
 </script>
