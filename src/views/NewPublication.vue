@@ -1,5 +1,9 @@
 <template>
-  <publication-form></publication-form>
+  <div id=app>
+    <v-app>
+      <publication-form></publication-form>
+    </v-app>
+  </div>
 </template>
 
 <script lang='ts'>
