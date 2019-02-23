@@ -2,11 +2,26 @@ language: node_js
 node_js:
   - lts/*
   - node
-
 cache: npm
+
+services:
+  - docker
 
 install:
   - npm i
 
 script:
   - npm run -s lint
+
+before_deploy:
+  - echo $REGISTRY_PASS | docker login -u "$REGISTRY_USER" --password-stdin
+  - export IMAGE_TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "dev"; fi`
+  - export IMAGE_NAME="piterpy/postpost-frontend"
+  - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+deploy:
+  provider: script
+  script: docker push $IMAGE_NAME:$IMAGE_TAG
+  on:
+    condition: $TRAVIS_BRANCH =~ ^master|develop$
+    all_branches: true
