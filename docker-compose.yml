@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  api:
+    container_name: postpost_api
+    image: piterpy/postpost:$TAG
+    restart: unless-stopped
+    ports:
+      - 8000:8000
+    env_file: .env
+    volumes:
+      - /tmp/db.sqlite3:/app/postpost/db.sqlite3
+
+  frontend:
+    container_name: postpost_frontend
+    image: piterpy/postpost-frontend:$TAG
+    restart: unless-stopped
+    ports:
+      - 8043:8043
+    env_file: .env
+
+  watchtower:
+    image: v2tec/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30
