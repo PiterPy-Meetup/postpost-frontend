@@ -1,4 +1,3 @@
-
 import { configure, addDecorator } from '@storybook/vue';
 import 'vuetify/dist/vuetify.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -10,7 +9,8 @@ Vue.use(Vuetify, {
 });
 
 addDecorator(() => ({
-  template: '<v-app ><story/></v-app>',
+  // all of vuetify components requires v-app root tag
+  template: '<v-app><story/></v-app>',
 }));
 
 const req = require.context('../src/stories', true, /\.js$/);
