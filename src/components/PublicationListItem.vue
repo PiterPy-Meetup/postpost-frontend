@@ -1,5 +1,5 @@
 <docs>
-AAA
+Hey **hello**
 </docs>
 
 <template>

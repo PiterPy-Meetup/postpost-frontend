@@ -1,12 +1,12 @@
 
-import { withReadme, withDocs, doc } from 'storybook-readme';
+import { withDocs } from 'storybook-readme';
 import { storiesOf } from '@storybook/vue';
 import { object, withKnobs, number, text } from '@storybook/addon-knobs';
 
 import PublicationListItem from '../components/PublicationListItem.vue';
 storiesOf('PublicationListItem', module)
-
   .addDecorator(withKnobs)
+  .addDecorator(withDocs(PublicationListItem.options.__docs))
   .add('Simple item', () => {
     return {
       components: { PublicationListItem },  
