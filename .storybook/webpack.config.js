@@ -16,7 +16,7 @@ module.exports = ({ config, mode }) => {
       }
     ],
   });
-  config.plugins.push(new ForkTsCheckerWebpackPlugin())
+  config.plugins.push(new ForkTsCheckerWebpackPlugin());
 
   // <docs> tag support
   config.module.rules.push({
