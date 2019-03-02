@@ -24,4 +24,5 @@ export default class PublicationListItem extends Vue {
 </script>
 
 <style>
+
 </style>

@@ -1,44 +1,50 @@
 <template>
-    <v-form
-      ref="form"
-      v-model="valid"
-      lazy-validation=""
-    >
-        <v-text-field
-          v-model="input.username"
-          label="Username"
-          required
-        ></v-text-field>
+  <v-form>
+    <v-text-field
+      v-model="username"
+      label="Username"
+      required
+    ></v-text-field>
 
-        <v-text-field
-          v-model="input.password"
-          label="Password"
-          required
-        ></v-text-field>
+    <v-text-field
+      v-model="password"
+      label="Password"
+      required
+    ></v-text-field>
 
-        <v-btn
-          color="success"
-          @click="login"
-        >Login</v-btn>
-    </v-form>
+    <v-btn
+      color="success"
+      @click="signInUser"
+      :loading="loading"
+      :disabled="loading"
+    >Login</v-btn>
+  </v-form>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import { authorizeUser } from '@/api';
-import { AuthorizeUserInterface } from '@/interfaces';
+
 
 @Component
 export default class LoginForm extends Vue {
-    input: AuthorizeUserInterface = {
-      username: "",
-      password: "",
-    }
+  public username: string = '';
+  public password: string = '';
+  public loading: boolean = false;
 
-    login () {
-      const response = authorizeUser(this.input);
-      console.log(response);
+  public async signInUser() {
+    this.loading = true;
+    try {
+      const authInfo = await authorizeUser(this.username, this.password);
+      this.$store.commit('changeTokens', {
+        accessToken: authInfo.access_token,
+        refreshToken: authInfo.refresh_token,
+      });
+    } catch (error) {
+      // TODO: add
     }
+    this.loading = false;
+  }
 }
 </script>

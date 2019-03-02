@@ -1,6 +1,5 @@
 import axios from 'axios';
-import qs from 'qs';
-import { AuthorizeUserInterface, AuthDataInterface, AuthResponseInterface } from '@/interfaces';
+import {AuthResponseInterface} from '@/interfaces';
 
 const client = axios.create({
     baseURL: process.env.VUE_APP_BASE_API_URL,
@@ -11,18 +10,17 @@ export function getPublications() {
     return client.get('/publications');
 }
 
-export async function authorizeUser(userCredentials: AuthorizeUserInterface): Promise<AuthResponseInterface> {
-    const authData: AuthDataInterface = {
-        username: userCredentials.username,
-        password: userCredentials.password,
-        client_id: process.env.VUE_APP_CLIENT_ID,
-        client_secret: process.env.VUE_APP_CLIENT_SECRET,
-        grant_type: process.env.VUE_APP_GRANT_TYPE,
-    };
+export async function authorizeUser(username: string, password: string): Promise<AuthResponseInterface> {
+    const authData = new FormData();
+    authData.append('username', username);
+    authData.append('password', password);
+    authData.append('client_id', process.env.VUE_APP_CLIENT_ID);
+    authData.append('client_secret', process.env.VUE_APP_CLIENT_SECRET);
+    authData.append('grant_type', 'password');
+
     const result = await client.post(
         '/oauth/token/',
-        qs.stringify(authData),
+        authData,
     );
-    const authResponse = result.data as AuthResponseInterface;
-    return authResponse;
+    return result.data as AuthResponseInterface;
 }
