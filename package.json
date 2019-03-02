@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "material-design-icons-iconfont": "^4.0.5",
+    "moment": "^2.24.0",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
