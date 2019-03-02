@@ -3,85 +3,138 @@
 </docs>
 
 <template>
-    <v-dialog v-model="isPublicationFormOpen">
-        <v-container fluid>
-            <v-layout>
-                <v-flex xs12>
-                    <v-card>
-                        <v-card-title>
-                            <v-layout row justify-start>
-                                <v-flex xs6>
-                                    <v-layout row align-center fill-height>
-                                        <v-flex xs12>
-                                            <v-layout justify-start>
-                                                <h2>Новая публикация</h2>
+    <v-dialog persistent scrollable v-model="isPublicationFormOpen" max-width width="600" class="scroll-style">
+        <v-layout>
+            <v-flex xs12>
+                <v-card>
+                    <v-card-title>
+                        <v-layout row justify-start>
+                            <v-flex xs6>
+                                <v-layout row align-center fill-height>
+                                    <v-flex xs12>
+                                        <v-layout justify-start>
+                                            <h2>Новая публикация</h2>
+                                        </v-layout>
+                                    </v-flex>
+                                </v-layout>
+                            </v-flex>
+                            <v-flex offset-xs4 xs2>
+                                <v-layout justify-end>
+                                    <v-btn
+                                            text
+                                            icon
+                                            @click="$emit('close')"
+                                    >
+                                        <v-icon>close</v-icon>
+                                    </v-btn>
+                                </v-layout>
+                            </v-flex>
+                        </v-layout>
+
+                    </v-card-title>
+
+                    <v-divider></v-divider>
+
+                    <v-card-text>
+
+                        <v-layout row wrap justify-center class="mx-2">
+                            <v-flex xs12>
+
+                                <v-flex xs12>
+                                    <v-flex xs12>
+                                        <v-textarea
+                                                outline
+                                                label="Напишите текст"
+                                                v-model="postText"
+                                        ></v-textarea>
+                                    </v-flex>
+
+                                </v-flex>
+
+                                <v-flex xs12>
+
+
+                                    <v-select
+                                            :value="posts['platformPosts'].map(el => el.platformType)"
+                                            @input="onSelectNetwork"
+                                            :items="socialItems"
+                                            label="Социальные сети"
+                                            multiple
+                                    ></v-select>
+
+                                </v-flex>
+
+                                <v-flex xs12>
+
+                                    <v-layout row wrap>
+                                        <v-flex
+                                                v-for="(network, index) in posts['platformPosts']"
+                                                :key="index"
+                                                xs12
+                                        >
+                                            <v-layout row wrap>
+                                                <v-flex xs12>
+                                                    <v-textarea
+                                                            outline
+                                                            :label="`Напишите текст для ${network.platformType}` "
+                                                            v-model="network.text"
+                                                    ></v-textarea>
+                                                </v-flex>
+                                                <v-flex
+                                                        v-if="posts['platformPosts'].length > 1 && index < posts['platformPosts'].length - 1"
+                                                        xs12
+                                                        class="mb-4"
+                                                >
+                                                    <v-divider></v-divider>
+                                                </v-flex>
+
                                             </v-layout>
                                         </v-flex>
                                     </v-layout>
                                 </v-flex>
-                                <v-flex offset-xs4 xs2>
-                                    <v-layout justify-end>
-                                        <v-btn text icon>
-                                            <v-icon>close</v-icon>
-                                        </v-btn>
-                                    </v-layout>
+
+                                <v-flex xs12>
+
+                                    <date-time-picker
+                                            v-model="posts['scheduledAt']"
+                                    >
+                                    </date-time-picker>
+
                                 </v-flex>
+
+                            </v-flex>
+
+                        </v-layout>
+
+                    </v-card-text>
+
+                    <v-divider></v-divider>
+
+                    <v-card-actions>
+                        <v-list-tile>
+                            <v-layout
+                                    align-center
+                                    justify-end
+                            >
+                                <v-btn
+                                        color="primary"
+                                        outline
+                                >
+                                    В черновики
+                                </v-btn>
+                                <v-btn
+                                        color="primary"
+                                        outline
+                                >
+                                    Запланировать
+                                </v-btn>
                             </v-layout>
+                        </v-list-tile>
+                    </v-card-actions>
+                </v-card>
 
-                        </v-card-title>
-
-                        <v-divider></v-divider>
-
-                        <v-flex xs12>
-                            <v-card-text>
-
-                                <v-layout row wrap justify-center class="ma-3">
-
-                                    <v-flex xs12>
-                                        <v-flex xs12>
-                                            <v-textarea
-                                                    outline
-                                                    label="Напишите текст"
-                                                    v-model="postText"
-                                            ></v-textarea>
-                                        </v-flex>
-
-                                    </v-flex>
-
-                                    <v-flex xs12>
-
-
-                                        <v-select
-                                                :value="posts['platformPosts'].map(el => el.platformType)"
-                                                @input="onSelectNetwork"
-                                                :items="socialItems"
-                                                label="Социальные сети"
-                                                multiple
-                                        ></v-select>
-
-                                    </v-flex>
-
-                                    <v-divider></v-divider>
-
-                                    <v-layout row wrap>
-                                        <v-flex v-for="(network, index) in posts['platformPosts']" :key="index" xs12>
-                                            <v-textarea
-                                                    outline
-                                                    :label="`Напишите текст для ${network.platformType}` "
-                                                    v-model="network.text"
-                                            ></v-textarea>
-                                        </v-flex>
-                                    </v-layout>
-
-                                </v-layout>
-
-                            </v-card-text>
-                        </v-flex>
-
-                    </v-card>
-                </v-flex>
-            </v-layout>
-        </v-container>
+            </v-flex>
+        </v-layout>
     </v-dialog>
 </template>
 
@@ -89,19 +142,22 @@
     import Vue from 'vue';
     import Component from 'vue-class-component';
     import {Prop} from 'vue-property-decorator';
-    import axios from 'axios';
-    import moment from 'moment';
+    import DateTimePicker from './DateTimePicker.vue';
 
-    @Component
+    @Component({
+        components: {DateTimePicker},
+    })
     export default class PublicationForm extends Vue {
 
         @Prop(
             {
                 type: Boolean,
                 default: false,
-            }
+            },
         )
         public isPublicationFormOpen!: boolean;
+
+        private menu!: boolean = false;
 
         private publicationTypes: Array<{ 'text': string, 'value': string }> = [
             {text: 'Черновик', value: 'draft'},
@@ -120,91 +176,57 @@
             ['VK', 'vk'],
         ]) as ReadonlyMap<string, string>;
 
-        get socialItems(): Array<string> {
-            return this.socialMediaList.map(social => social.text)
+        get socialItems(): string[] {
+            return this.socialMediaList.map((social) => social.text);
         }
-
-        /*
-        *  Array<{
-                'platformType': "telegram_channel",
-                'text': string,
-                'telegramPictureAsLink': true,
-                'telegramMarkdown': true
-            }> */
 
         private postText: string = '';
 
-        private posts1: Map<string, string> = new Map([
-            ['text', ''],
-            ['picture', ''],
-            ['scheduledAt', ''],
-            ['platformPosts', []],
-            ["createdAt", ''],
-            ["updatedAt", '']
-        ]);
+        private chosenSocials: string[] = [];
 
         private posts: object = {
             text: '',
             picture: '',
             scheduledAt: '',
             platformPosts: [],
-            createdAt: '',
-            updatedAt: ''
         };
 
         private onSelectNetwork(value): void {
-            const oldPosts = this.posts['platformPosts'].slice().filter(el => value.includes(el.platformType));
-            this.posts['platformPosts'] = oldPosts.concat(value
-                .filter(el => !oldPosts.map(el => el.platformType).includes(el))
-                .map(el => {
+            const oldPosts = this.posts.platformPosts.slice().filter((el) => value.includes(el.platformType));
+            this.posts.platformPosts = oldPosts.concat(value
+                .filter((np) => !oldPosts.map((op) => op.platformType).includes(np))
+                .map((np) => {
                     return {
-                        platformType: el,
+                        platformType: np,
                         text: this.postText,
                         telegramPictureAsLink: false,
                         telegramMarkdown: false,
-                    }
-                }))
-        }
-
-        private chosenSocials: Array<string> = [];
-
-        private formData = {
-            date: new Date().toISOString().substr(0, 10),
-            time: new Date().toLocaleTimeString(),
-            text: '',
-            type: null,
-        };
-
-        private async postPublication(): Promise<void> {
-            // const result = await axios.post(`{BACKEND_URL}/api/publications`);
-
-            const payload = this.transformFormDataToPayload();
-
-            try {
-                const result = await axios.post(
-                    `https://opes.serveo.net/api/publications/`,
-                    payload,
-                    {headers: {authorization: 'Bearer 9Q2DBXAUju3PpL7R18vdXbs6KQ1AJ6'}},
-                );
-            } catch (e) {
-                // pass
-            }
-        }
-
-        private
-
-        transformFormDataToPayload(): any {  // TODO declare formdata and payload interfaces
-            const data = this.formData;
-
-            return {
-                text: data.text,
-                scheduledAt: moment(`${data.date} ${data.time}`).format(),
-                platformPosts: [
-                    {
-                        platformType: 'telegram_channel',
-                    },
-                ],
-            };
+                    };
+                }));
         }
     }
 </script>
+
+<style scoped>
+
+    /* SCROLL */
+
+    /* width */
+    /* width */
+    ::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: red;
+        border-radius: 10px;
+    }
+
+</style>

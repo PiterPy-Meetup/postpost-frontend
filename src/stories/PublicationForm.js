@@ -23,6 +23,7 @@ storiesOf('PublicationForm', module)
                 @click='isPublicationFormOpen = true'
                 >Открыть форму</v-btn>
             </v-btn><publication-form
+                @close='isPublicationFormOpen = false'
                 :isPublicationFormOpen="isPublicationFormOpen"
             ></publication-form>
         </v-layout>`,
