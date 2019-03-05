@@ -11,6 +11,8 @@ import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
 import PublicationListItem from '@/components/PublicationListItem.vue';
 import { PublicationInterface } from '@/interfaces';
+import { fetchPublications } from '../api';
+
 
 @Component({
   components: {
@@ -19,28 +21,14 @@ import { PublicationInterface } from '@/interfaces';
 })
 // почему publication-list, а не publications: https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential
 export default class PublicationList extends Vue {
-  // не уверен что computed для запроса внешних данных хорошая идея,
-  // но с константными данными почему бы и нет
-  get publications(): PublicationInterface[] {
-    // использовать здесь API-вызовы
-    return [
-      {
-        id: 1,
-        text: 'something',
-        currentStatus: 'scheduled',
-        platformPosts: [],
-        createdAt: '',
-        updatedAt: '',
-      },
-      {
-        id: 2,
-        text: 'something',
-        currentStatus: 'scheduled',
-        platformPosts: [],
-        createdAt: '',
-        updatedAt: '',
-      },
-    ];
+  public publications: PublicationInterface[] = [];
+
+  public mounted() {
+    this.updatePublications();
+  }
+
+  public async updatePublications() {
+    this.publications = await fetchPublications();
   }
 }
 </script>
