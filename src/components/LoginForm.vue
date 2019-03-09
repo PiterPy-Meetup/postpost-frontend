@@ -44,7 +44,7 @@ export default class LoginForm extends Vue {
         accessToken: authInfo.access_token,
         refreshToken: authInfo.refresh_token,
       });
-      this.$router.push({'name': 'publications'});
+      this.$router.push({name: 'publications'});
     } catch (error) {
       // TODO: add error handling
     }
