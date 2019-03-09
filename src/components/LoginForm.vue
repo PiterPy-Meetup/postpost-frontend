@@ -1,24 +1,27 @@
 <template>
-  <v-form>
-    <v-text-field
-      v-model="username"
-      label="Username"
-      required
-    ></v-text-field>
+  <v-card class="pa-4">
+    <v-form class="login-form">
+      <v-text-field
+        v-model="username"
+        label="Username"
+        required
+      ></v-text-field>
 
-    <v-text-field
-      v-model="password"
-      label="Password"
-      required
-    ></v-text-field>
+      <v-text-field
+        v-model="password"
+        label="Password"
+        type="password"
+        required
+      ></v-text-field>
 
-    <v-btn
-      color="success"
-      @click="signInUser"
-      :loading="loading"
-      :disabled="loading"
-    >Login</v-btn>
-  </v-form>
+      <v-btn
+        color="success"
+        @click="signInUser"
+        :loading="loading"
+        :disabled="loading"
+      >Login</v-btn>
+    </v-form>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -41,10 +44,17 @@ export default class LoginForm extends Vue {
         accessToken: authInfo.access_token,
         refreshToken: authInfo.refresh_token,
       });
+      this.$router.push({'name': 'publications'});
     } catch (error) {
-      // TODO: add
+      // TODO: add error handling
     }
     this.loading = false;
   }
 }
 </script>
+
+<style>
+  .login-form {
+    max-width: 500px;
+  }
+</style>
