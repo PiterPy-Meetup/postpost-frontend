@@ -8,11 +8,9 @@
       <v-spacer></v-spacer>
       <v-btn
         flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
+        :to="{path: '/login'}"
       >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>open_in_new</v-icon>
+        <span class="mr-2">Login</span>
       </v-btn>
     </v-toolbar>
 

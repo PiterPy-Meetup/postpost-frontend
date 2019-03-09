@@ -1,6 +1,9 @@
 <template>
   <v-card class="pa-4">
-    <v-form class="login-form">
+    <v-form
+      class="login-form"
+      @submit.prevent="submitLoginForm"
+    >
       <v-text-field
         v-model="username"
         label="Username"
@@ -15,40 +18,48 @@
       ></v-text-field>
 
       <v-btn
-        color="success"
-        @click="signInUser"
+        type="submit"
         :loading="loading"
         :disabled="loading"
       >Login</v-btn>
+
+      <v-alert
+        type="error"
+        :value="error"
+        :outline="true"
+      >
+        {{ error }}
+      </v-alert>
     </v-form>
   </v-card>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { authorizeUser } from '@/api';
+import { Component, Prop } from 'vue-property-decorator';
 
 
 @Component
 export default class LoginForm extends Vue {
+  @Prop({
+    type: Boolean,
+    default: false,
+  })
+  public loading!: boolean;
+  @Prop({
+    type: String,
+    default: null,
+  })
+  public error?: string | null;
+
   public username: string = '';
   public password: string = '';
-  public loading: boolean = false;
 
-  public async signInUser() {
-    this.loading = true;
-    try {
-      const authInfo = await authorizeUser(this.username, this.password);
-      this.$store.commit('changeTokens', {
-        accessToken: authInfo.access_token,
-        refreshToken: authInfo.refresh_token,
-      });
-      this.$router.push({name: 'publications'});
-    } catch (error) {
-      // TODO: add error handling
-    }
-    this.loading = false;
+  public submitLoginForm() {
+    this.$emit('change', {
+      username: this.username,
+      password: this.password,
+    });
   }
 }
 </script>

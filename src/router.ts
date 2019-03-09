@@ -25,11 +25,12 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'login') {
-    next();
-  }
   const isAccessTokenExist = Boolean(store.getters.accessToken);
-  if (isAccessTokenExist) {
+  if (to.name === 'login' && isAccessTokenExist) {
+    next({path: '/'});
+  } else if (to.name === 'login' && !isAccessTokenExist) {
+    next();
+  } else if (isAccessTokenExist) {
     next();
   } else {
     next({name: 'login'});
