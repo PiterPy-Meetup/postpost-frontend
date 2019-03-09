@@ -9,7 +9,8 @@ import * as Sentry from '@sentry/browser';
 Vue.config.productionTip = false;
 
 Sentry.init({
-  dsn: 'https://ee58a2f4d06148e59af5473f2e71ff02@sentry.io/1411606',
+  dsn: process.env.SENTRY_DSN,
+  environment: process.env.SENTRY_ENVIRONMENT,
   integrations: [new Sentry.Integrations.Vue({
     Vue,
     attachProps: true,
