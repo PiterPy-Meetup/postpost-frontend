@@ -55,6 +55,6 @@ export default class LoginForm extends Vue {
 
 <style>
   .login-form {
-    max-width: 500px;
+    max-width: 600px;
   }
 </style>

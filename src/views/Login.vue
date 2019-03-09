@@ -1,9 +1,15 @@
 <template>
   <v-container>
     <v-layout>
-      <v-flex offset-xs4 xs4>
+      <v-spacer></v-spacer>
+      <v-flex
+        xs12
+        sm8
+        lg6
+      >
         <login-form></login-form>
       </v-flex>
+      <v-spacer></v-spacer>
     </v-layout>
   </v-container>
 </template>
