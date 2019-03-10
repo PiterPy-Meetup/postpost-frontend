@@ -30,7 +30,6 @@ storiesOf('LoginForm', module)
     }
   });
 
-
 storiesOf('LoginForm', module)
   .addDecorator(withKnobs)
   .addDecorator(withDocs("Use `admin/admin` as right credentials. See story source code for more info."))
