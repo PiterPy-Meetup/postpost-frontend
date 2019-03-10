@@ -1,7 +1,12 @@
+<docs>
+Use between two v-spacer for looking good.
+</docs>
+
 <template>
-  <v-card class="pa-4">
+  <v-card
+    class="pa-4 login-form text-xs-center"
+  >
     <v-form
-      class="login-form"
       @submit.prevent="submitLoginForm"
     >
       <v-text-field
