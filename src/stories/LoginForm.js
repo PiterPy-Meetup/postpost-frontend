@@ -43,16 +43,16 @@ storiesOf('LoginForm', module)
         }
       },
       methods: {
-        async change(event) {
+        change(event) {
           const {username, password} = event;
           this.loading = true;
           this.error = null;
-          await new Promise(() => setTimeout(() => {
+          setTimeout(() => {
             if (username !== 'admin' || password !== 'admin') {
               this.error = 'Invalid credentials!'
             }
             this.loading = false;
-          }, 800));
+          }, 800);
 
         }
       },
