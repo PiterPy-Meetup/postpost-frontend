@@ -1,7 +1,7 @@
 import { withDocs } from 'storybook-readme';
 import { storiesOf } from '@storybook/vue';
 import { withKnobs, boolean, text } from '@storybook/addon-knobs';
-import { action, configureActions } from '@storybook/addon-actions';
+import { action } from '@storybook/addon-actions';
 
 import LoginForm from '../components/LoginForm';
 
