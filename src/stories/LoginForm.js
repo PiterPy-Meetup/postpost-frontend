@@ -43,8 +43,7 @@ storiesOf('LoginForm', module)
         }
       },
       methods: {
-        change(event) {
-          const {username, password} = event;
+        change(username, password) {
           this.loading = true;
           this.error = null;
           setTimeout(() => {

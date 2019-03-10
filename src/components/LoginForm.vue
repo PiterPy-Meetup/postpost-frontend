@@ -65,10 +65,7 @@ export default class LoginForm extends Vue {
   public password: string = '';
 
   public submitLoginForm() {
-    this.$emit('change', {
-      username: this.username,
-      password: this.password,
-    });
+    this.$emit('change', this.username, this.password);
   }
 }
 </script>

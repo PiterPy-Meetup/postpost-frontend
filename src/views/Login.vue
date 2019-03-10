@@ -10,7 +10,7 @@
         <login-form
           :loading="loading"
           :error="error"
-          @change="signInUser($event.username, $event.password)"
+          @change="signInUser"
         ></login-form>
       </v-flex>
       <v-spacer></v-spacer>
