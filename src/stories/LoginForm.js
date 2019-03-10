@@ -10,7 +10,7 @@ storiesOf('LoginForm', module)
   .addDecorator(withDocs(LoginForm.options.__docs))
   .add('Login form', () => {
     return {
-      components: {LoginForm},
+      components: { LoginForm },
       props: {
         error: {
           default: text('Authorization error', '')
@@ -21,6 +21,40 @@ storiesOf('LoginForm', module)
       },
       methods: {
         change: action('submit-form-change-action'),
+      },
+      template: `<login-form
+        :error="error"
+        :loading="loading"
+        @change="change"
+      ></login-form>`,
+    }
+  });
+
+storiesOf('LoginForm', module)
+  .addDecorator(withKnobs)
+  .addDecorator(withDocs("Use `admin/admin` as right credentials. See story source code for more info."))
+  .add('Login form with handler', () => {
+    return {
+      components: { LoginForm },
+      data() {
+        return {
+          error: null,
+          loading: false,
+        }
+      },
+      methods: {
+        async change(event) {
+          const {username, password} = event;
+          this.loading = true;
+          this.error = null;
+          await new Promise(() => setTimeout(() => {
+            if (username !== 'admin' || password !== 'admin') {
+              this.error = 'Invalid credentials!'
+            }
+            this.loading = false;
+          }, 800));
+
+        }
       },
       template: `<login-form
         :error="error"

@@ -1,5 +1,9 @@
 <docs>
 Use between two v-spacer for looking good.
+
+Receive current state props: `error` and `loading`.
+
+Emit `change` event when button was clicked.
 </docs>
 
 <template>
