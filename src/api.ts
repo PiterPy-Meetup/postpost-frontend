@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {AuthResponseInterface} from '@/interfaces';
+import { AuthResponseInterface } from '@/interfaces';
 
 const client = axios.create({
     baseURL: process.env.VUE_APP_BASE_API_URL,
