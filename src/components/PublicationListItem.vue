@@ -20,8 +20,13 @@ import { Prop, Component } from 'vue-property-decorator';
 // https://vuejs.org/v2/style-guide/#Tightly-coupled-component-names-strongly-recommended
 export default class PublicationListItem extends Vue {
   @Prop({ type: Number })
+  /**
+   * First try
+   */
   public id!: number;
-
+  /**
+   * Oh my :(
+   */
   @Prop({ type: String })
   public text!: string;
 

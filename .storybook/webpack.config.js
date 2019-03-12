@@ -27,6 +27,12 @@ module.exports = ({ config, mode }) => {
       'markdown-loader',
     ],
   });
+  // support for info addon https://github.com/pocka/storybook-addon-vue-info
+  config.module.rules.push({
+    test: /\.vue$/,
+    loader: 'storybook-addon-vue-info/loader',
+    enforce: 'post'
+  });
 
   return config;
 };
