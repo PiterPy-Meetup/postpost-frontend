@@ -7,11 +7,11 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint --no-fix",
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "storybook-build": "build-storybook -c .storybook -o .out"
+    "storybook-build": "build-storybook -c .storybook -o .out",
+    "chromatic": "CHROMATIC_APP_CODE=p6j9b0w9u2p chromatic test"
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "material-design-icons-iconfont": "^4.0.5",
     "vue": "^2.6.6",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
@@ -34,6 +34,7 @@
     "jshint": "^2.9.7",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
+    "storybook-chromatic": "^1.3.0",
     "storybook-readme": "^4.0.5",
     "style-loader": "^0.23.1",
     "stylus": "^0.54.5",
