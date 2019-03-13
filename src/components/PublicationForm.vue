@@ -13,21 +13,20 @@
                                 <v-layout row align-center fill-height>
                                     <v-flex xs12>
                                         <v-layout justify-start>
-                                            <h2>Новая публикация</h2>
+                                            <h2 class="pl-2">Новая публикация</h2>
                                         </v-layout>
                                     </v-flex>
                                 </v-layout>
                             </v-flex>
-                            <v-flex offset-xs4 xs2>
-                                <v-layout justify-end>
+                            <v-flex offset-xs5 xs1>
                                     <v-btn
+                                            class="pl-2"
                                             text
                                             icon
                                             @click="$emit('close')"
                                     >
                                         <v-icon>close</v-icon>
                                     </v-btn>
-                                </v-layout>
                             </v-flex>
                         </v-layout>
 
@@ -111,8 +110,8 @@
                     <v-divider></v-divider>
 
                     <v-card-actions>
-                        <v-list-tile>
                             <v-layout
+                                    class="mx-3"
                                     align-center
                                     justify-end
                             >
@@ -129,7 +128,6 @@
                                     Запланировать
                                 </v-btn>
                             </v-layout>
-                        </v-list-tile>
                     </v-card-actions>
                 </v-card>
 
