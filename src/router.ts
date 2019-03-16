@@ -1,10 +1,12 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Publications from '@/views/Publications.vue';
+import Login from '@/views/Login.vue';
+import store from '@/store';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -15,12 +17,24 @@ export default new Router({
       component: Publications,
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      path: '/login',
+      name: 'login',
+      component: Login,
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const isAccessTokenExist = Boolean(store.getters.accessToken);
+  if (to.name === 'login' && isAccessTokenExist) {
+    next({path: '/'});
+  } else if (to.name === 'login' && !isAccessTokenExist) {
+    next();
+  } else if (isAccessTokenExist) {
+    next();
+  } else {
+    next({name: 'login'});
+  }
+});
+
+export default router;
