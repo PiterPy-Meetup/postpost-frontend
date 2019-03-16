@@ -1,5 +1,5 @@
 <template>
-    <v-layout row wrap>
+    <v-layout row wrap align-center>
         <v-flex xs3>
             <v-menu
                     ref="menuDate"
@@ -62,6 +62,17 @@
             </v-menu>
         </v-flex>
 
+        <v-flex xs2>
+            <v-btn
+              color="primary"
+              small
+              icon
+              @click="clearDateTime"
+            >
+                <v-icon>clear</v-icon>
+            </v-btn>
+        </v-flex>
+
     </v-layout>
 </template>
 
@@ -109,6 +120,10 @@
                 return '';
             }
             return moment(this.value, moment.HTML5_FMT.DATETIME_LOCAL_MS).format('YYYY-MM-DD');
+        }
+
+        private clearDateTime(): void {
+            this.$emit('input', '')
         }
 
     }
