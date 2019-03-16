@@ -5,12 +5,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-
+    accessToken: '',
+    refreshToken: '',
+  },
+  getters: {
+    accessToken: (state) => {
+      return state.accessToken;
+    },
   },
   mutations: {
-
-  },
-  actions: {
-
+    changeTokens(state, {accessToken, refreshToken}) {
+      state.accessToken = accessToken;
+      state.refreshToken = refreshToken;
+    },
   },
 });
