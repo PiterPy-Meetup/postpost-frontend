@@ -1,6 +1,6 @@
 import {withDocs} from 'storybook-readme';
 import {storiesOf} from '@storybook/vue';
-import {withKnobs} from '@storybook/addon-knobs';
+import {boolean, text, withKnobs} from '@storybook/addon-knobs';
 
 import PublicationForm from '../components/PublicationForm.vue';
 
@@ -10,10 +10,20 @@ storiesOf('PublicationForm', module)
   .add('Publication form sample', () => {
     return {
       components: {PublicationForm},
-      props: {},
+      props: {
+        error: {
+          default: text('Authorization error', '')
+        },
+        loading: {
+          default: boolean("Loading flag", false)
+        },
+        success: {
+          default: boolean("Success flag", false)
+        },
+      },
       data: () => {
         return {
-          posts: {
+          publication: {
             text: '',
             scheduledAt: '',
             platformPosts: [],
@@ -22,16 +32,19 @@ storiesOf('PublicationForm', module)
         }
       },
       methods: {
-        submit: function () {
-          console.log(this.posts);
+        create: function () {
+          console.log(this.publication);
         }
       },
       template: `
         <v-layout row wrap justify-center>
           <v-flex xs6>
             <publication-form
-                v-model="posts"
-                @submit="submit"
+                v-model="publication"
+                :loading="loading"
+                :error="error"
+                :success="success"
+                @create="create"
             ></publication-form>
           </v-flex>
         </v-layout>`,
