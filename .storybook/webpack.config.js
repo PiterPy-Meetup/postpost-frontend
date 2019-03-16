@@ -22,7 +22,7 @@ module.exports = ({ config, mode }) => {
   config.module.rules.push({
     resourceQuery: /blockType=docs/,
     use: [
-      'storybook-readme/env/vue/docs-loader',
+      require.resolve('./docs-loader.js'),
       'html-loader',
       'markdown-loader',
     ],
