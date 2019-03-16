@@ -13,19 +13,27 @@ storiesOf('PublicationForm', module)
       props: {},
       data: () => {
         return {
-          isPublicationFormOpen: false,
+          posts: {
+            text: '',
+            scheduledAt: '',
+            platformPosts: [],
+            attachments: [],
+          }
+        }
+      },
+      methods: {
+        submit: function () {
+          console.log(this.posts);
         }
       },
       template: `
-        <v-layout>
-            <v-btn 
-                slot="activator"
-                @click='isPublicationFormOpen = true'
-                >Открыть форму</v-btn>
-            </v-btn><publication-form
-                @close='isPublicationFormOpen = false'
-                :isPublicationFormOpen="isPublicationFormOpen"
+        <v-layout row wrap justify-center>
+          <v-flex xs6>
+            <publication-form
+                v-model="posts"
+                @submit="submit"
             ></publication-form>
+          </v-flex>
         </v-layout>`,
     }
   })
