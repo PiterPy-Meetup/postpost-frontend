@@ -22,10 +22,16 @@ module.exports = ({ config, mode }) => {
   config.module.rules.push({
     resourceQuery: /blockType=docs/,
     use: [
-      'storybook-readme/env/vue/docs-loader',
+      require.resolve('./docs-loader.js'),
       'html-loader',
       'markdown-loader',
     ],
+  });
+  // support for info addon https://github.com/pocka/storybook-addon-vue-info
+  config.module.rules.push({
+    test: /\.vue$/,
+    loader: 'storybook-addon-vue-info/loader',
+    enforce: 'post'
   });
 
   return config;
