@@ -2,6 +2,7 @@ import { configure, addDecorator } from '@storybook/vue';
 import 'vuetify/dist/vuetify.css';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import 'storybook-chromatic';
 
 Vue.use(Vuetify, {
   iconfont: 'md',
