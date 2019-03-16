@@ -14,7 +14,7 @@ export interface PublicationInterface {
     id: number;
     text: string;
     currentStatus: string;
-    picture?: string;
+    attachments?: AttachmentInterface[];
     scheduledAt?: string;
     platformPosts: PlatformPostInterface[];
     createdAt: string;
@@ -27,4 +27,8 @@ export interface AuthResponseInterface {
     expires_in: number;
     refresh_token: string;
     scope: string;
+}
+
+export interface AttachmentInterface {
+    attachment: string;
 }

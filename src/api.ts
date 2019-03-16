@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AuthResponseInterface } from '@/interfaces';
+import {AuthResponseInterface, PublicationInterface} from '@/interfaces';
 
 const client = axios.create({
     baseURL: process.env.VUE_APP_BASE_API_URL,
@@ -23,4 +23,12 @@ export async function authorizeUser(username: string, password: string): Promise
         authData,
     );
     return result.data as AuthResponseInterface;
+}
+
+export async function createNewPublication(newPublication: object): Promise<PublicationInterface> {
+    const result = await client.post(
+        '/publications',
+        newPublication,
+    );
+    return result.data as PublicationInterface;
 }
