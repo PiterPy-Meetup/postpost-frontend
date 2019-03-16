@@ -3,11 +3,13 @@ import {withKnobs, text, select} from '@storybook/addon-knobs';
 import {ICONS_BY_SOCIAL_NETWORK} from '../components/PublicationItemPlatformIcon.vue';
 
 import PublicationItemPlatformIcon from '../components/PublicationItemPlatformIcon.vue';
+import {withInfo} from "storybook-addon-vue-info";
 
 const SOCIAL_NETWORK_ICONS = Array.from(ICONS_BY_SOCIAL_NETWORK.keys()).concat('invalidKey');
 
 storiesOf('PublicationItemPlatformIcon', module)
   .addDecorator(withKnobs)
+  .addDecorator(withInfo)
   .add(
     'Just Icon',
     () => {
@@ -25,9 +27,9 @@ storiesOf('PublicationItemPlatformIcon', module)
           },
         },
         template: `
-<publication-item-platform-icon
-  :avatar="avatar" :social-type="socialType"
-></publication-item-platform-icon>`,
+  <publication-item-platform-icon
+    :avatar="avatar" :social-type="socialType"
+  ></publication-item-platform-icon>`,
       }
     },
     {

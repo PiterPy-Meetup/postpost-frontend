@@ -50,11 +50,18 @@ import { Component, Prop } from 'vue-property-decorator';
 
 @Component
 export default class LoginForm extends Vue {
+  /**
+   * Loading flag. Blocks interface
+   */
   @Prop({
     type: Boolean,
     default: false,
   })
   public loading!: boolean;
+
+  /**
+   * Error flag. Add error state if prop contains text. Otherwise use `null` value.
+   */
   @Prop({
     type: String,
     default: null,
@@ -65,6 +72,10 @@ export default class LoginForm extends Vue {
   public password: string = '';
 
   public submitLoginForm() {
+    /**
+     * Emit change with username and password
+     * @type {Event}
+     */
     this.$emit('change', this.username, this.password);
   }
 }
