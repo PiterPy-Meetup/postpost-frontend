@@ -9,7 +9,7 @@
         <v-card>
           <v-card-title>
             <v-layout row justify-start>
-              <v-flex xs6>
+              <v-flex xs12>
                 <v-layout row align-center fill-height>
                   <v-flex xs12>
                     <v-layout justify-start>
@@ -17,16 +17,6 @@
                     </v-layout>
                   </v-flex>
                 </v-layout>
-              </v-flex>
-              <v-flex offset-xs5 xs1>
-                <v-btn
-                  class="pl-2"
-                  text
-                  icon
-                  @click="$emit('close')"
-                >
-                  <v-icon>close</v-icon>
-                </v-btn>
               </v-flex>
             </v-layout>
 
@@ -110,10 +100,36 @@
               <v-flex xs12>
                 <publication-form-attachments
                   v-model="value.attachments"
+                  :loading="loading"
                   @failure="failure"
                 ></publication-form-attachments>
               </v-flex>
 
+            </v-layout>
+
+            <v-layout row wrap v-if="error" class="mx-2">
+              <v-flex xs12>
+                <v-alert
+                  type="error"
+                  :value="error"
+                  :outline="true"
+                >
+                  {{ error }}
+                </v-alert>
+              </v-flex>
+            </v-layout>
+
+            <v-layout row wrap v-if="!error && success" class="mx-2">
+              <v-flex xs12>
+                <v-alert
+                  type="success"
+                  :value="success"
+                  transition="slide-x-transition"
+                  :outline="true"
+                >
+                  Публикация успешно создана
+                </v-alert>
+              </v-flex>
             </v-layout>
 
           </v-card-text>
@@ -129,7 +145,8 @@
               <v-btn
                 color="primary"
                 outline
-                @click="$emit('submit')"
+                @click="$emit('create')"
+                :loading="loading"
               >
                 Запланировать
               </v-btn>
@@ -164,7 +181,30 @@
         )
         public value!: object;
 
-        private menu!: boolean = false;
+        @Prop(
+            {
+                type: Boolean,
+                default: false,
+            },
+        )
+        public success!: boolean;
+
+
+        @Prop(
+            {
+                type: String,
+                default: null,
+            },
+        )
+        public error!: boolean;
+
+        @Prop(
+            {
+                type: Boolean,
+                default: false,
+            },
+        )
+        public loading!: boolean;
 
         private publicationTypes: Array<{ 'text': string, 'value': string }> = [
             {text: 'Черновик', value: 'draft'},
