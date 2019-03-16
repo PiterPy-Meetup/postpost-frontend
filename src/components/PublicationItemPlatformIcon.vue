@@ -12,48 +12,48 @@
 </template>
 
 <script lang="ts">
-    import Vue from 'vue';
-    import {Prop, Component} from 'vue-property-decorator';
-    import twitterAvatar from '../assets/social_logos/twitter.svg';
-    import facebookAvatar from '../assets/social_logos/facebook.svg';
-    import vkAvatar from '../assets/social_logos/vk.svg';
-    import instagramAvatar from '../assets/social_logos/instagram.svg';
-    import telegramAvatar from '../assets/social_logos/telegram.svg';
-    import unknownNetwork from '../assets/social_logos/unknown-network.svg';
-    import unknownAvatar from '../assets/social_logos/unknown-avatar.svg';
+import Vue from 'vue';
+import { Prop, Component } from 'vue-property-decorator';
+import twitterAvatar from '../assets/social_logos/twitter.svg';
+import facebookAvatar from '../assets/social_logos/facebook.svg';
+import vkAvatar from '../assets/social_logos/vk.svg';
+import instagramAvatar from '../assets/social_logos/instagram.svg';
+import telegramAvatar from '../assets/social_logos/telegram.svg';
+import unknownNetwork from '../assets/social_logos/unknown-network.svg';
+import unknownAvatar from '../assets/social_logos/unknown-avatar.svg';
 
-    export const ICONS_BY_SOCIAL_NETWORK: ReadonlyMap<string, string> = new Map([
-        ['twitter', twitterAvatar],
-        ['facebook', facebookAvatar],
-        ['vk', vkAvatar],
-        ['instagram', instagramAvatar],
-        ['telegram', telegramAvatar],
-    ]) as ReadonlyMap<string, string>;
+export const ICONS_BY_SOCIAL_NETWORK: ReadonlyMap<string, string> = new Map([
+    ['twitter', twitterAvatar],
+    ['facebook', facebookAvatar],
+    ['vk', vkAvatar],
+    ['instagram', instagramAvatar],
+    ['telegram', telegramAvatar],
+]) as ReadonlyMap<string, string>;
 
-    @Component
-    export default class PublicationItemPlatformIcon extends Vue {
+@Component
+export default class PublicationItemPlatformIcon extends Vue {
 
-        @Prop({type: String})
-        public avatar?: string;
+    @Prop({type: String})
+    public avatar?: string;
 
-        @Prop({
-            type: String,
-            validator: (value) => {
-                return ICONS_BY_SOCIAL_NETWORK.has(value);
-            },
-        })
-        public socialType!: string;
+    @Prop({
+        type: String,
+        validator: (value) => {
+            return ICONS_BY_SOCIAL_NETWORK.has(value);
+        },
+    })
+    public socialType!: string;
 
-        get socialNetworkIcon(): string {
-            return ICONS_BY_SOCIAL_NETWORK.get(this.socialType) || unknownNetwork;
-        }
-
-        get avatarIcon(): string {
-            return this.avatar || unknownAvatar;
-        }
-
-
+    get socialNetworkIcon(): string {
+        return ICONS_BY_SOCIAL_NETWORK.get(this.socialType) || unknownNetwork;
     }
+
+    get avatarIcon(): string {
+        return this.avatar || unknownAvatar;
+    }
+
+
+}
 </script>
 
 <style scoped>
