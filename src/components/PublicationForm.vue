@@ -1,139 +1,145 @@
 <docs>
-    Form for creating and publishing post to social networks.
+  Form for creating and publishing post to social networks.
 </docs>
 
 <template>
-    <v-dialog persistent scrollable v-model="isPublicationFormOpen" max-width width="600" class="scroll-style">
-        <v-layout>
-            <v-flex xs12>
-                <v-card>
-                    <v-card-title>
-                        <v-layout row justify-start>
-                            <v-flex xs6>
-                                <v-layout row align-center fill-height>
-                                    <v-flex xs12>
-                                        <v-layout justify-start>
-                                            <h2 class="pl-2">Новая публикация</h2>
-                                        </v-layout>
-                                    </v-flex>
-                                </v-layout>
-                            </v-flex>
-                            <v-flex offset-xs5 xs1>
-                                    <v-btn
-                                            class="pl-2"
-                                            text
-                                            icon
-                                            @click="$emit('close')"
-                                    >
-                                        <v-icon>close</v-icon>
-                                    </v-btn>
-                            </v-flex>
-                        </v-layout>
+  <v-container fluid>
+    <v-layout row wrap>
+      <v-flex xs12>
+        <v-card>
+          <v-card-title>
+            <v-layout row justify-start>
+              <v-flex xs6>
+                <v-layout row align-center fill-height>
+                  <v-flex xs12>
+                    <v-layout justify-start>
+                      <h2 class="pl-2">Новая публикация</h2>
+                    </v-layout>
+                  </v-flex>
+                </v-layout>
+              </v-flex>
+              <v-flex offset-xs5 xs1>
+                <v-btn
+                  class="pl-2"
+                  text
+                  icon
+                  @click="$emit('close')"
+                >
+                  <v-icon>close</v-icon>
+                </v-btn>
+              </v-flex>
+            </v-layout>
 
-                    </v-card-title>
+          </v-card-title>
 
-                    <v-divider></v-divider>
+          <v-divider></v-divider>
 
-                    <v-card-text>
+          <v-card-text>
 
-                        <v-layout row wrap justify-center class="mx-2">
-                            <v-flex xs12>
+            <v-layout row wrap justify-center class="mx-2">
+              <v-flex xs12>
 
-                                <v-flex xs12>
-                                    <v-flex xs12>
-                                        <v-textarea
-                                                outline
-                                                label="Напишите текст"
-                                                v-model="postText"
-                                        ></v-textarea>
-                                    </v-flex>
+                <v-flex xs12>
+                  <v-flex xs12>
+                    <v-textarea
+                      outline
+                      label="Напишите текст"
+                      v-model="value.text"
+                    ></v-textarea>
+                  </v-flex>
 
-                                </v-flex>
+                </v-flex>
 
-                                <v-flex xs12>
+                <v-flex xs12>
 
 
-                                    <v-select
-                                            :value="posts['platformPosts'].map(el => el.platformType)"
-                                            @input="onSelectNetwork"
-                                            :items="socialItems"
-                                            label="Социальные сети"
-                                            multiple
-                                    ></v-select>
+                  <v-select
+                    :value="value['platformPosts'].map(el => el.platformType)"
+                    @input="onSelectNetwork"
+                    :items="socialItems"
+                    label="Социальные сети"
+                    multiple
+                  ></v-select>
 
-                                </v-flex>
+                </v-flex>
 
-                                <v-flex xs12>
+                <v-flex xs12>
 
-                                    <v-layout row wrap>
-                                        <v-flex
-                                                v-for="(network, index) in posts['platformPosts']"
-                                                :key="index"
-                                                xs12
-                                        >
-                                            <v-layout row wrap>
-                                                <v-flex xs12>
-                                                    <v-textarea
-                                                            outline
-                                                            :label="`Напишите текст для ${network.platformType}` "
-                                                            v-model="network.text"
-                                                    ></v-textarea>
-                                                </v-flex>
-                                                <v-flex
-                                                        v-if="posts['platformPosts'].length > 1 && index < posts['platformPosts'].length - 1"
-                                                        xs12
-                                                        class="mb-4"
-                                                >
-                                                    <v-divider></v-divider>
-                                                </v-flex>
+                  <v-layout row wrap>
+                    <v-flex
+                      v-for="(network, index) in value['platformPosts']"
+                      :key="index"
+                      xs12
+                    >
+                      <v-layout row wrap>
+                        <v-flex xs12>
+                          <v-textarea
+                            outline
+                            :label="`Напишите текст для ${network.platformType}` "
+                            v-model="network.text"
+                          ></v-textarea>
+                        </v-flex>
+                        <v-flex
+                          v-if="value['platformPosts'].length > 1 && index < value['platformPosts'].length - 1"
+                          xs12
+                          class="mb-4"
+                        >
+                          <v-divider></v-divider>
+                        </v-flex>
 
-                                            </v-layout>
-                                        </v-flex>
-                                    </v-layout>
-                                </v-flex>
+                      </v-layout>
+                    </v-flex>
+                  </v-layout>
+                </v-flex>
 
-                                <v-flex xs12>
+                <v-flex xs12>
 
-                                    <date-time-picker
-                                            v-model="posts['scheduledAt']"
-                                    >
-                                    </date-time-picker>
+                  <date-time-picker
+                    v-model="value['scheduledAt']"
+                  >
+                  </date-time-picker>
 
-                                </v-flex>
+                </v-flex>
 
-                            </v-flex>
+              </v-flex>
 
-                        </v-layout>
+            </v-layout>
 
-                    </v-card-text>
+            <v-layout row wrap>
 
-                    <v-divider></v-divider>
+              <v-flex xs12>
+                <publication-form-attachments
+                  v-model="value.attachments"
+                  @failure="failure"
+                ></publication-form-attachments>
+              </v-flex>
 
-                    <v-card-actions>
-                            <v-layout
-                                    class="mx-3"
-                                    align-center
-                                    justify-end
-                            >
-                                <v-btn
-                                        color="primary"
-                                        outline
-                                >
-                                    В черновики
-                                </v-btn>
-                                <v-btn
-                                        color="primary"
-                                        outline
-                                >
-                                    Запланировать
-                                </v-btn>
-                            </v-layout>
-                    </v-card-actions>
-                </v-card>
+            </v-layout>
 
-            </v-flex>
-        </v-layout>
-    </v-dialog>
+          </v-card-text>
+
+          <v-divider></v-divider>
+
+          <v-card-actions>
+            <v-layout
+              class="mx-3"
+              align-center
+              justify-end
+            >
+              <v-btn
+                color="primary"
+                outline
+                @click="$emit('submit')"
+              >
+                Запланировать
+              </v-btn>
+            </v-layout>
+          </v-card-actions>
+        </v-card>
+
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script lang='ts'>
@@ -141,19 +147,22 @@
     import Component from 'vue-class-component';
     import {Prop} from 'vue-property-decorator';
     import DateTimePicker from './DateTimePicker.vue';
+    import PublicationFormAttachments from "./PublicationFormAttachments.vue";
+    import lodash from 'lodash'
 
     @Component({
-        components: {DateTimePicker},
+        components: {PublicationFormAttachments, DateTimePicker},
     })
     export default class PublicationForm extends Vue {
 
         @Prop(
             {
-                type: Boolean,
-                default: false,
+                type: Object,
+                default: () => {
+                },
             },
         )
-        public isPublicationFormOpen!: boolean;
+        public value!: object;
 
         private menu!: boolean = false;
 
@@ -178,53 +187,31 @@
             return this.socialMediaList.map((social) => social.text);
         }
 
-        private postText: string = '';
+        private failure(error: string): void {
+            console.error(error);
+        }
 
         private chosenSocials: string[] = [];
 
-        private posts: object = {
-            text: '',
-            picture: '',
-            scheduledAt: '',
-            platformPosts: [],
-        };
-
         private onSelectNetwork(value): void {
-            const oldPosts = this.posts.platformPosts.slice().filter((el) => value.includes(el.platformType));
-            this.posts.platformPosts = oldPosts.concat(value
+            const posts = lodash.cloneDeep(this.value)
+            const oldPosts = posts.platformPosts.slice().filter((el) => value.includes(el.platformType));
+            posts.platformPosts = oldPosts.concat(value
                 .filter((np) => !oldPosts.map((op) => op.platformType).includes(np))
                 .map((np) => {
                     return {
                         platformType: np,
-                        text: this.postText,
+                        text: posts.text,
                         telegramPictureAsLink: false,
                         telegramMarkdown: false,
                     };
                 }));
+            this.$emit('input', posts)
         }
+
     }
 </script>
 
 <style scoped>
-
-    /* SCROLL */
-
-    /* width */
-    /* width */
-    ::-webkit-scrollbar {
-        width: 20px;
-    }
-
-    /* Track */
-    ::-webkit-scrollbar-track {
-        box-shadow: inset 0 0 5px grey;
-        border-radius: 10px;
-    }
-
-    /* Handle */
-    ::-webkit-scrollbar-thumb {
-        background: red;
-        border-radius: 10px;
-    }
 
 </style>
