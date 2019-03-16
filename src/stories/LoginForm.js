@@ -11,7 +11,6 @@ storiesOf('LoginForm', module)
   .add(
     'Login form',
     () => {
-      console.log(LoginForm.options)
       return {
         components: { LoginForm },
         props: {
