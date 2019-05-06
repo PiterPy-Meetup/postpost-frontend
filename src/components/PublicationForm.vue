@@ -101,7 +101,6 @@
                 <publication-form-attachments
                   v-model="value.attachments"
                   :loading="loading"
-                  @failure="failure"
                 ></publication-form-attachments>
               </v-flex>
 
@@ -227,14 +226,8 @@
             return this.socialMediaList.map((social) => social.text);
         }
 
-        private failure(error: string): void {
-            console.error(error);
-        }
-
-        private chosenSocials: string[] = [];
-
-        private onSelectNetwork(value): void {
-            const posts = lodash.cloneDeep(this.value)
+        private onSelectNetwork(value: string[]): void {
+            const posts = lodash.cloneDeep(this.value);
             const oldPosts = posts.platformPosts.slice().filter((el) => value.includes(el.platformType));
             posts.platformPosts = oldPosts.concat(value
                 .filter((np) => !oldPosts.map((op) => op.platformType).includes(np))

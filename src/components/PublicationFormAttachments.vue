@@ -46,7 +46,6 @@
         :multiple="false"
         :public-key="publicKey"
         @success="onUploadSuccess"
-        @error="onUploadFailure"
       >
         <div
           @click="disableIfLoading"
@@ -107,10 +106,6 @@
             const newAttachments = this.value.slice();
             newAttachments.push({attachment: uploadData.cdnUrl})
             this.$emit('input', newAttachments);
-        }
-
-        private onUploadFailure(error: string) {
-            this.$emit('failure', error);
         }
 
         private get publicKey(): string {
