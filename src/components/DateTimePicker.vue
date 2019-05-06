@@ -79,7 +79,7 @@
 <script lang='ts'>
     import Vue from 'vue';
     import Component from 'vue-class-component';
-    import {Prop} from 'vue-property-decorator';
+    import { Prop } from 'vue-property-decorator';
     import moment from 'moment';
 
     @Component
@@ -123,7 +123,7 @@
         }
 
         private clearDateTime(): void {
-            this.$emit('input', '')
+            this.$emit('input', '');
         }
 
     }

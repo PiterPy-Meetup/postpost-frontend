@@ -42,7 +42,6 @@
 
                 <v-flex xs12>
 
-
                   <v-select
                     :value="value['platformPosts'].map(el => el.platformType)"
                     @input="onSelectNetwork"
@@ -161,10 +160,10 @@
 <script lang='ts'>
     import Vue from 'vue';
     import Component from 'vue-class-component';
-    import {Prop} from 'vue-property-decorator';
+    import { Prop } from 'vue-property-decorator';
     import DateTimePicker from './DateTimePicker.vue';
-    import PublicationFormAttachments from "./PublicationFormAttachments.vue";
-    import lodash from 'lodash'
+    import PublicationFormAttachments from './PublicationFormAttachments.vue';
+    import lodash from 'lodash';
 
     @Component({
         components: {PublicationFormAttachments, DateTimePicker},
@@ -175,6 +174,7 @@
             {
                 type: Object,
                 default: () => {
+                    return {};
                 },
             },
         )
@@ -195,7 +195,7 @@
                 default: null,
             },
         )
-        public error!: boolean;
+        public error!: string | null;
 
         @Prop(
             {
@@ -205,22 +205,11 @@
         )
         public loading!: boolean;
 
-        private publicationTypes: Array<{ 'text': string, 'value': string }> = [
-            {text: 'Черновик', value: 'draft'},
-            {text: 'Запланированная', value: 'scheduled'},
-        ];
-
         private socialMediaList: Array<{ 'text': string, 'value': string }> = [
             {text: 'Telegram', value: 'telegram'},
             {text: 'Facebook', value: 'facebook'},
             {text: 'VK', value: 'vk'},
         ];
-
-        private socialMapping: ReadonlyMap<string, string> = new Map([
-            ['Telegram', 'telegram'],
-            ['Facebook', 'facebook'],
-            ['VK', 'vk'],
-        ]) as ReadonlyMap<string, string>;
 
         get socialItems(): string[] {
             return this.socialMediaList.map((social) => social.text);
@@ -229,17 +218,16 @@
         private onSelectNetwork(value: string[]): void {
             const posts = lodash.cloneDeep(this.value);
             const oldPosts = posts.platformPosts.slice().filter((el) => value.includes(el.platformType));
-            posts.platformPosts = oldPosts.concat(value
-                .filter((np) => !oldPosts.map((op) => op.platformType).includes(np))
-                .map((np) => {
-                    return {
-                        platformType: np,
-                        text: posts.text,
-                        telegramPictureAsLink: false,
-                        telegramMarkdown: false,
-                    };
-                }));
-            this.$emit('input', posts)
+            const newPosts = value.filter((np) => !oldPosts.map((op) => op.platformType).includes(np)).map((np) => {
+                return {
+                    platformType: np,
+                    text: posts.text,
+                    telegramPictureAsLink: false,
+                    telegramMarkdown: false,
+                };
+            });
+            posts.platformPosts = oldPosts.concat(newPosts);
+            this.$emit('input', posts);
         }
 
     }

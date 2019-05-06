@@ -19,8 +19,12 @@
               class="ma-1"
               color="grey lighten-4"
             >
-              <v-img class="ma-1" :style="loading ? 'cursor: default;' : 'cursor: pointer;'" :src="attachment"
-                     @click="deleteImage(index)">
+              <v-img
+                class="ma-1"
+                :style="loading ? 'cursor: default;' : 'cursor: pointer;'"
+                :src="attachment"
+                @click="deleteImage(index)"
+              >
                 <v-expand-transition>
                   <div
                     v-if="hover && !loading"
@@ -68,8 +72,8 @@
 
     import Vue from 'vue';
     import Component from 'vue-class-component';
-    import {Prop} from 'vue-property-decorator';
-    import DateTimePicker from "./DateTimePicker.vue";
+    import { Prop } from 'vue-property-decorator';
+    import DateTimePicker from './DateTimePicker.vue';
     import Uploadcare from 'uploadcare-vue';
 
     @Component({
@@ -104,7 +108,7 @@
 
         private onUploadSuccess(uploadData: Map<string, any>) {
             const newAttachments = this.value.slice();
-            newAttachments.push({attachment: uploadData.cdnUrl})
+            newAttachments.push({attachment: uploadData.cdnUrl});
             this.$emit('input', newAttachments);
         }
 
@@ -112,9 +116,9 @@
             return process.env.UPLOAD_CARE_PUBLIC_KEY;
         }
 
-        private disableIfLoading(event): void {
+        private disableIfLoading(event: Event): void {
             if (this.loading) {
-                event.stopPropagation()
+                event.stopPropagation();
             }
         }
 
@@ -122,7 +126,6 @@
 </script>
 
 <style scoped>
-
 
   .v-card--reveal {
     align-items: center;

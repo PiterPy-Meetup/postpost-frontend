@@ -14,17 +14,17 @@
 
 <script lang='ts'>
     import Vue from 'vue';
-    import {Component} from 'vue-property-decorator';
+    import { Component } from 'vue-property-decorator';
     import PublicationForm from '@/components/PublicationForm.vue';
-    import lodash from 'lodash'
-    import {createNewPublication} from '@/api';
+    import lodash from 'lodash';
+    import { createNewPublication } from '@/api';
 
     const publicationSchema = {
         text: '',
         scheduledAt: '',
         platformPosts: [],
         attachments: [],
-    }
+    };
 
     @Component({
         components: {
@@ -39,9 +39,9 @@
 
         private success: boolean = false;
 
-        private error: string = null;
+        private error: string | null = null;
 
-        private async newPublication(): void {
+        private async newPublication() {
             this.loading = true;
             this.error = null;
             try {
@@ -50,7 +50,7 @@
                 this.publication = lodash.cloneDeep(publicationSchema);
                 setTimeout(() => {
                     this.success = false;
-                }, 1000)
+                }, 1000);
             } catch (error) {
                 this.error = error.response.data.error_description;
             }
