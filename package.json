@@ -11,7 +11,7 @@
     "chromatic": "CHROMATIC_APP_CODE=p6j9b0w9u2p chromatic test"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "vue": "^2.6.8",
     "vue-class-component": "^6.0.0",
     "vue-property-decorator": "^7.0.0",
