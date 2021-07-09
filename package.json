@@ -11,6 +11,7 @@
     "chromatic": "CHROMATIC_APP_CODE=p6j9b0w9u2p chromatic test"
   },
   "dependencies": {
+    "@sentry/browser": "^4.6.4",
     "axios": "^0.18.0",
     "vue": "^2.6.8",
     "vue-class-component": "^6.0.0",

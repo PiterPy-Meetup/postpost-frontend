@@ -25,7 +25,7 @@ before_deploy:
   - echo $REGISTRY_PASS | docker login -u "$REGISTRY_USER" --password-stdin
   - export IMAGE_TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo "dev"; fi`
   - export IMAGE_NAME="piterpy/postpost-frontend"
-  - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+  - docker build -e SENTRY_DSN=$SENTRY_DSN -e SENTRY_ENVIRONMENT=develop -t $IMAGE_NAME:$IMAGE_TAG .
 
 deploy:
   provider: script
